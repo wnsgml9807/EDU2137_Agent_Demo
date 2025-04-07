@@ -14,7 +14,9 @@ import time # time 모듈 추가
 
 dotenv.load_dotenv()
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+if not anthropic_api_key:
+    anthropic_api_key = st.secrets.get("ANTHROPIC_API_KEY")
 
 # tools.py 경로 설정 (현재 파일 기준 상위 폴더)
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -25,7 +27,7 @@ from tools import get_weather, search_restaurants
 # --- LLM 및 도구 설정 --- 
 # API 키 설정 (st.secrets 사용 권장)
 try:
-    llm = ChatAnthropic(model="claude-3-5-sonnet-latest", temperature=0.7, api_key=ANTHROPIC_API_KEY)
+    llm = ChatAnthropic(model="claude-3-5-sonnet-latest", temperature=0.7, api_key=anthropic_api_key)
 except Exception as e:
     st.error(f"LLM 초기화 오류: {e}. API 키를 Streamlit secrets에 설정했는지 확인하세요.")
     st.stop()
