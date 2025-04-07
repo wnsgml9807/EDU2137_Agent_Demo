@@ -26,7 +26,8 @@ from tools import get_seoul_weather_data, get_picnic_restaurant_data
 try:
     anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
     if not anthropic_api_key:
-        anthropic_api_key = st.secrets.get("ANTHROPIC_API_KEY")
+        anthropic_api_key = st.secrets["ANTHROPIC_API_KEY"]
+        print("접근 성공")  
     if not anthropic_api_key:
         raise ValueError("ANTHROPIC_API_KEY가 환경 변수 또는 secrets.toml에 설정되지 않았습니다.")
 
@@ -37,6 +38,7 @@ try:
         api_key=anthropic_api_key
     )
 except ValueError as e:
+    print("접근 실패")
     st.error(e)
     st.stop()
 except Exception as e:

@@ -18,9 +18,11 @@ try:
     anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
     if not anthropic_api_key:
         # secrets.toml 에서도 찾아보기
-        anthropic_api_key = st.secrets.get("ANTHROPIC_API_KEY")
+        anthropic_api_key = st.secrets["ANTHROPIC_API_KEY"]
+        print("접근 성공")
 
     if not anthropic_api_key:
+        print("접근 실패")
         raise ValueError("ANTHROPIC_API_KEY가 환경 변수 또는 secrets.toml에 설정되지 않았습니다.")
 
     # Claude 모델 사용
